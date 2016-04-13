@@ -8,6 +8,7 @@ import parsedatetime
 import urwid
 from dateutil.tz import tzlocal
 
+from . import widgets
 
 class EditState:
     none = object()
@@ -36,6 +37,10 @@ class TodoEditor:
         else:
             due = ""
 
+        self._calendar = widgets.Choice(
+            ["1", "2", "3"],
+            "1",
+        )
         self._summary = urwid.Edit(edit_text=todo.summary)
         self._description = urwid.Edit(edit_text=todo.description,
                                        multiline=True)
@@ -51,7 +56,8 @@ class TodoEditor:
                                  (10, delete_btn)], dividechars=2)
 
         pile_items = []
-        for label, field in [("Summary", self._summary),
+        for label, field in [("Calendar", self._calendar),
+                             ("Summary", self._summary),
                              ("Description", self._description),
                              ("Location", self._location),
                              ("Due", self._due),
