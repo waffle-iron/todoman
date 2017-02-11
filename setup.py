@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+import os
+import sys
+
 from setuptools import setup
 
 setup(
@@ -11,11 +14,9 @@ setup(
     license='MIT',
     packages=['todoman'],
     include_package_data=True,
-    entry_points={
-        'console_scripts': [
-            'todo = todoman.cli:cli',
-        ]
-    },
+    data_files=[
+        (os.path.dirname(sys.executable), ['bin/todo']),
+    ],
     install_requires=[
         open('requirements.txt').readlines()
     ],
