@@ -113,7 +113,7 @@ _interactive_option = click.option(
                     'regardless.'))
 @click.option('--porcelain', is_flag=True, help='Use a JSON format that will '
               'remain stable regardless of configuration or version.')
-@click.option('--humanize', default=False, is_flag=True,
+@click.option('--humanize', default=None, is_flag=True,
               help='Format all dates and times in a human friendly way')
 @click.pass_context
 @click.version_option(prog_name='todoman')
@@ -130,6 +130,9 @@ def cli(ctx, color, porcelain, humanize):
     if porcelain and humanize:
         raise click.ClickException('--porcelain and --humanize cannot be used'
                                    ' at the same time.')
+
+    if humanize is None:  # False means explicitly disabled
+        humanize = config['main']['humanize']
 
     if porcelain:
         formatter_class = ui.PorcelainFormatter
