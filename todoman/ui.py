@@ -3,6 +3,7 @@ import json
 from time import mktime
 
 import click
+import humanize
 import parsedatetime
 import urwid
 from dateutil.tz import tzlocal
@@ -370,6 +371,14 @@ class TodoFormatter:
     def format_database(self, database):
         return '{}@{}'.format(database.color_ansi or '',
                               click.style(database.name))
+
+
+class HumanizedFormatter(TodoFormatter):
+
+    def format_datetime(self, dt):
+        if not dt:
+            return ''
+        return humanize.naturaltime(self.now - dt)
 
 
 class PorcelainFormatter(TodoFormatter):
