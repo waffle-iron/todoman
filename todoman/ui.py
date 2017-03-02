@@ -372,7 +372,7 @@ class TodoFormatter:
                               click.style(database.name))
 
 
-class PorcelainFormatter:
+class PorcelainFormatter(TodoFormatter):
 
     def _todo_as_dict(self, todo):
         return dict(

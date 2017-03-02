@@ -7,10 +7,10 @@ from os.path import expanduser, isdir
 import click
 import click_log
 
-from . import model
+from . import model, ui
 from .configuration import ConfigurationException, load_config
 from .model import Database, FileTodo
-from .ui import EditState, PorcelainFormatter, TodoEditor, TodoFormatter
+from .ui import EditState, TodoEditor
 
 TODO_ID_MIN = 1
 with_id_arg = click.argument('id', type=click.IntRange(min=TODO_ID_MIN))
@@ -126,13 +126,17 @@ def cli(ctx, color, porcelain):
     }
 
     if porcelain:
-        ctx.obj['formatter'] = PorcelainFormatter()
+        formatter_class = ui.PorcelainFormatter
     else:
-        ctx.obj['formatter'] = TodoFormatter(
-            config['main']['date_format'],
-            config['main']['time_format'],
-            config['main']['dt_separator'],
-        )
+        formatter_class = ui.TodoFormatter
+
+    ctx.obj['formatter'] = formatter_class(
+        # XXX: How above moving these to config['formatting'] and passing
+        # that instead?
+        config['main']['date_format'],
+        config['main']['time_format'],
+        config['main']['dt_separator'],
+    )
 
     color = color or config['main']['color']
     if color == 'always':
