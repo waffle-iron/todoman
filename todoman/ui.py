@@ -41,13 +41,13 @@ class TodoEditor:
         self._msg_text = urwid.Text('')
         if todo.due:
             # TODO: use proper date_format
-            due = formatter.format_datetime(todo.due)
+            due = str(formatter.format_datetime(todo.due))
         else:
             due = ""
 
         if todo.start:
             # TODO: use proper date_format
-            dtstart = formatter.format_datetime(todo.start)
+            dtstart = str(formatter.format_datetime(todo.start))
         else:
             dtstart = ''
 
