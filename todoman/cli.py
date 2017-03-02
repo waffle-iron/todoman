@@ -113,7 +113,7 @@ _interactive_option = click.option(
                     'regardless.'))
 @click.option('--porcelain', is_flag=True, help='Use a JSON format that will '
               'remain stable regardless of configuration or version.')
-@click.option('--humanize', default=None, is_flag=True,
+@click.option('--humanize', '-h', default=None, is_flag=True,
               help='Format all dates and times in a human friendly way')
 @click.pass_context
 @click.version_option(prog_name='todoman')
